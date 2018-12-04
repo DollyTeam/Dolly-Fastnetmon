@@ -18,7 +18,7 @@
 	/**************************************** Mostrar creditos y Ayuda en pantalla ***********************************************/
 	$credit = "<br>"."**********************************************************************************************"."<br>";
 	$credit .= "* MikroTik RouterOS PHP API integration for FastNetMon "."<br>";
-	$credit .= "* This script connect to router MikroTik and add or remove a blackhole's rule for the IP attack"."<br>";
+	$credit .= "* This script connects to a MikoTik router and adds or removes a blackhole's rule for the attaking IP"."<br>";
 	$credit .= "*<br>";
 	$credit .= "<font color='#2673c2'><b>* RTBH MultiUpstream *"."<br>"; 
 	$credit .= "* v1.1 - 1 Dec 18 - Startnix version || Author: DollyTeam - foro.startnix.com</b></font>"."<br>"; 
@@ -108,9 +108,9 @@
 
 	/************************************ Ejecutamos el RBTH en el Mikrotik ****************************************/
 	if ($API->connect($ipRouteros , $Username , $Pass, $api_puerto)) {
-	//					un switch es más eficiente y permite añadir acciones sin mucha alteración del código
+	// Un switch es más eficiente y permite añadir acciones sin mucha alteración del código
 		switch ($switch_RBTH) { 
-		//Add Blocking by route blackhole
+		// Add Blocking by route blackhole
 			case "ban":
 				$comment = 'FastNetMon Guard: IP ' . $dst_attack . ' is attacked by '.$src_evil;
 				$API->write( '/ip/route/add', false );
@@ -121,7 +121,7 @@
 				$API->read();
 				echo '<font color="#4fea35"><b>Apply RTBH to Upstream --> </b></font> [ '.$upstream_input. ' ] for IP '.$dst_attack;
 			break;
-		/******************************** Borramos el RBTH  del Mikrtoik ********************/
+		// Borramos el RBTH  del Mikrtoik
 			case "unban":
 				$API->write( '/ip/route/print', false );
 				$API->write( '?dst-address=' . $dst_attack . "/32" );
@@ -139,19 +139,19 @@
 		// Acciones posibles, ban o unban, para la variable action
 			default:
 				echo $help;
-				echo '<font color="#ea4335"><b>[action] --> The action can only ban or unban</b></font>';
+				echo '<font color="#ea4335"><b>[action] --> The action can only be ban or unban</b></font>';
 		}
-		//				Sólo hay que desconectar si se ha producido una conexión correcta.
+		// Sólo hay que desconectar si se ha producido una conexión correcta.
 		$API->disconnect();
 		exit (0); // Salimos sin error.
 	} else {
 		// No hemos podido conectar con la Api del Router
 		/************************************************************************************************/
-		/** TODO 																						*/
-		/** Controlar el error de salida de la función para entregar el error como salida y no dar		*/
-		/** un error genérico																			*/
+		/** TODO											*/
+		/** Controlar el error de salida de la función para entregar el error como salida y no dar	*/
+		/** un error genérico										*/
 		/************************************************************************************************/
-		echo '<font color="#ea4335"><b>We could not connect to your router, check the connection data and port api</b></font>';	
+		echo '<font color="#ea4335"><b>We could not connect to the router, check the connection data and port api</b></font>';	
 		exit (-1); // si se ejecuta en un script queremos saber que ha habido un error.
 	}
 	/***************************************************************************************************************/
